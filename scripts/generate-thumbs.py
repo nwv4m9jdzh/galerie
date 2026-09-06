@@ -45,8 +45,10 @@ def main() -> None:
         return
 
     created, skipped = 0, 0
+    keep_names = set()
     for src in sources:
         dest = THUMBS_DIR / (src.stem + ".jpg")
+        keep_names.add(dest.name)
         if dest.exists() and dest.stat().st_mtime >= src.stat().st_mtime:
             skipped += 1
             continue
@@ -54,7 +56,15 @@ def main() -> None:
         created += 1
         print(f"  {src.name} -> {dest.relative_to(ROOT)}")
 
-    print(f"Hotovo: {created} vygenerováno, {skipped} přeskočeno (už aktuální).")
+    removed = 0
+    if THUMBS_DIR.exists():
+        for existing in THUMBS_DIR.glob("*.jpg"):
+            if existing.name not in keep_names:
+                existing.unlink()
+                removed += 1
+                print(f"  smazáno (zdroj chybí): {existing.relative_to(ROOT)}")
+
+    print(f"Hotovo: {created} vygenerováno, {skipped} přeskočeno, {removed} osiřelých smazáno.")
 
 
 if __name__ == "__main__":
