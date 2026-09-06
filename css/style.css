@@ -293,13 +293,9 @@ a {
 /* ---------- Mobile breakpoint ---------- */
 
 @media (max-width: 768px) {
-  .topbar {
-    display: none;
-  }
-
   .gallery {
     padding: 0.75rem;
-    padding-top: 0.75rem; /* topbar je na mobilu skrytý */
+    padding-top: 4.5rem; /* místo pro fixní horní pruh */
     padding-bottom: 6rem;
   }
 
