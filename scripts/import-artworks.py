@@ -18,7 +18,7 @@ Co skript dělá pro každou fotku ve zdrojové složce:
     stejný výstupní soubor, místo aby vznikaly duplicity
 
 Znovu spusť po každé úpravě barevnosti/obsahu fotek ve zdrojové
-složce a pak spusť ještě scripts/generate-thumbs.py.
+složce.
 
 Pozor: přepíše data/artworks.json - ruční úpravy title/description
 udělané přímo v JSONu se tímto spuštěním ztratí. Pokud už máš
@@ -107,7 +107,6 @@ def main():
     entries.sort(key=lambda e: e["date"], reverse=True)
     ARTWORKS_JSON.write_text(json.dumps(entries, ensure_ascii=False, indent=2) + "\n")
     print(f"\nHotovo: {len(entries)} děl zapsáno do {ARTWORKS_JSON.relative_to(PROJECT_ROOT)}")
-    print("Teď spusť: python3 scripts/generate-thumbs.py")
 
 
 if __name__ == "__main__":

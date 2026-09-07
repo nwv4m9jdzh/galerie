@@ -6,7 +6,6 @@
 (function () {
   var STORAGE_KEY = "galerie-lang";
   var DEFAULT_LANG = "cs";
-  var OTHER_LANG = { cs: "en", en: "cs" };
 
   var currentLang = DEFAULT_LANG;
   var currentDict = {};
@@ -63,10 +62,10 @@
         applyDict(dict);
         storeLang(lang);
 
-        var toggle = document.getElementById("lang-toggle");
-        if (toggle) {
-          toggle.textContent = OTHER_LANG[lang].toUpperCase();
-        }
+        document.querySelectorAll(".lang-option").forEach(function (btn) {
+          var isCurrent = btn.getAttribute("data-lang") === lang;
+          btn.setAttribute("aria-current", isCurrent ? "true" : "false");
+        });
 
         document.dispatchEvent(
           new CustomEvent("i18n:changed", { detail: { lang: lang, dict: dict } })
@@ -81,12 +80,14 @@
     var initial = getStoredLang() || DEFAULT_LANG;
     setLang(initial);
 
-    var toggle = document.getElementById("lang-toggle");
-    if (toggle) {
-      toggle.addEventListener("click", function () {
-        setLang(OTHER_LANG[currentLang]);
+    document.querySelectorAll(".lang-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var lang = btn.getAttribute("data-lang");
+        if (lang !== currentLang) {
+          setLang(lang);
+        }
       });
-    }
+    });
   }
 
   document.addEventListener("DOMContentLoaded", init);
