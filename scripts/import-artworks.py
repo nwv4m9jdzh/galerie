@@ -9,9 +9,8 @@ Zdrojová složka defaultně: ~/Desktop/2026 09 06 malby uprava
 (lze přepsat prvním argumentem, např. při přesunu složky).
 
 Co skript dělá pro každou fotku ve zdrojové složce:
-  - opraví EXIF rotaci z fotoaparátu, otočí o dalších 90° doleva
-    (autor fotí obrazy takto systematicky pootočené) a zmenší delší
-    stranu na max. 2048 px
+  - opraví EXIF rotaci z fotoaparátu a zmenší delší stranu na max.
+    2048 px
   - odstraní EXIF metadata (fotky obsahují GPS polohu pořízení)
   - přejmenuje na stabilní alfanumerický název odvozený hashem ze
     zdrojového jména souboru — stejný zdrojový soubor tedy při
@@ -78,7 +77,6 @@ def main():
     for src in sources:
         im = Image.open(src)
         im = ImageOps.exif_transpose(im).convert("RGB")
-        im = im.transpose(Image.ROTATE_90)  # otočit o 90° doleva
         date = get_date(im, src.name)
 
         long_edge = max(im.size)
