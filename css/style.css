@@ -9,34 +9,22 @@
   --breakpoint-mobile: 768px;
 }
 
-/* Noční režim: tvrdá inverze hodnot (255 − kanál), obrázky se jen mírně ztlumí */
+/* Noční režim: tvrdá inverze hodnot (255 − kanál); pozadí a text navíc napevno
+   přepočítány, jako by přes ně byl z 50 % v režimu screen položen
+   Lab(14.945, 0.339, -8.828) = #1f2632 — obrázků se přepočet netýká */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #000000;
+    --color-bg: #0f1319;
     --color-bg-alt: #424854;
-    --color-accent: #000000;
+    --color-accent: #0f1319;
     --color-bar: #a3a5aa;
-    --color-text: rgba(255, 255, 255, 0.62);
+    --color-text: #a4a5a8;
     --color-border: rgba(255, 255, 255, 0.25);
   }
 
   .gallery-section__image img,
   .gallery-full img {
     filter: brightness(0.88) contrast(0.95);
-    position: relative;
-    z-index: 61; /* nad překryvem níže — obrázků se barevný screen překryv netýká */
-  }
-
-  /* Překryv pozadí a textu Lab(14.945, 0.339, -8.828) v režimu screen, 50% krytí; obrázky mají vyšší z-index a zůstávají mimo */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    background: #1f2632;
-    mix-blend-mode: screen;
-    opacity: 0.5;
   }
 }
 
