@@ -20,6 +20,8 @@
       full: "images/full/" + artwork.filename,
       title: artwork.title[lang] || artwork.title.cs || "",
       description: artwork.description[lang] || artwork.description.cs || "",
+      width: artwork.width,
+      height: artwork.height,
     };
   }
 
@@ -60,6 +62,10 @@
       img.src = item.full;
       img.alt = item.title;
       img.loading = "lazy";
+      if (item.width && item.height) {
+        img.width = item.width;
+        img.height = item.height;
+      }
       figure.appendChild(img);
 
       var caption = document.createElement("div");
@@ -101,6 +107,10 @@
       img.src = item.full;
       img.alt = item.title;
       img.loading = "lazy";
+      if (item.width && item.height) {
+        img.width = item.width;
+        img.height = item.height;
+      }
 
       var caption = document.createElement("figcaption");
 

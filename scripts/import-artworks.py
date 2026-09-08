@@ -95,6 +95,8 @@ def main():
             "filename": filename,
             "title": {"cs": "Bez názvu", "en": "Untitled"},
             "description": {"cs": "", "en": ""},
+            "width": im.width,
+            "height": im.height,
         })
         print(f"  {src.name:35s} -> {filename}  date={date}  size={im.size}")
 
