@@ -20,11 +20,18 @@
     --color-bar: #a3a5aa;
     --color-text: #a4a5a8;
     --color-border: rgba(255, 255, 255, 0.25);
+
+    /* LADĚNÍ OBRÁZKŮ V NOČNÍM REŽIMU — tyhle tři hodnoty uprav podle oka.
+       1 = beze změny; nižší číslo = tlumenější jas / nižší kontrast / průhlednější. */
+    --img-dark-brightness: 0.88;
+    --img-dark-contrast: 0.95;
+    --img-dark-opacity: 0.9;
   }
 
   .gallery-section__image img,
   .gallery-full img {
-    filter: brightness(0.88) contrast(0.95);
+    filter: brightness(var(--img-dark-brightness)) contrast(var(--img-dark-contrast));
+    opacity: var(--img-dark-opacity);
   }
 }
 
