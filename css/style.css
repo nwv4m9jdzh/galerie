@@ -9,6 +9,18 @@
   --breakpoint-mobile: 768px;
 }
 
+/* Noční režim: tvrdá inverze hodnot (255 − kanál), obrázků se netýká */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #000000;
+    --color-bg-alt: #424854;
+    --color-accent: #000000;
+    --color-bar: #a3a5aa;
+    --color-text: rgba(255, 255, 255, 0.62);
+    --color-border: rgba(255, 255, 255, 0.25);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
