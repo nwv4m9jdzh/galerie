@@ -23,8 +23,8 @@
 
     /* LADĚNÍ OBRÁZKŮ V NOČNÍM REŽIMU — tyhle tři hodnoty uprav podle oka.
        1 = beze změny; nižší číslo = tlumenější jas / nižší kontrast / průhlednější. */
-    --img-dark-brightness: 0.88;
-    --img-dark-contrast: 0.95;
+    --img-dark-brightness: 0.9;
+    --img-dark-contrast: 1.1;
     --img-dark-opacity: 0.9;
   }
 
