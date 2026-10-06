@@ -9,9 +9,8 @@
   </style>
   <rect class="bg" width="64" height="64" rx="10"/>
   <rect class="ink" x="4" y="4" width="56" height="56" rx="7" stroke-width="2.5"/>
-  <g class="ink" stroke-width="4">
+  <g class="ink" stroke-width="4" transform="translate(0 -2)">
     <path d="M12 46V22l9 14 9-14v24"/>
     <path d="M51 27c-1.5-3-4.2-4.5-7.3-4.5-4 0-6.7 2.2-6.7 5.5 0 7.5 15 4.5 15 11.5 0 3.8-3 6.5-7.5 6.5-3.6 0-6.3-1.6-7.8-4.3"/>
-    <path d="M39.5 12.5l5 4 5-4"/>
   </g>
 </svg>
