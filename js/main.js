@@ -178,6 +178,79 @@
       });
   }
 
+  // Slow, eased section-to-section scrolling on desktop. Native CSS snap
+  // jumps too fast, so wheel/keys are animated here; CSS snap stays as the
+  // fallback (touch) and is switched off only while the animation runs.
+  var SCROLL_MS = 1100;
+  var animating = false;
+  var lastWheel = 0;
+
+  function ease(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function currentIndex(sections) {
+    var y = window.pageYOffset;
+    var best = 0;
+    sections.forEach(function (s, i) {
+      if (Math.abs(s.offsetTop - y) < Math.abs(sections[best].offsetTop - y)) best = i;
+    });
+    return best;
+  }
+
+  function goTo(sections, index) {
+    var from = window.pageYOffset;
+    var to = sections[index].offsetTop;
+    if (from === to) return;
+    var root = document.documentElement;
+    animating = true;
+    root.style.scrollSnapType = "none";
+    var start = null;
+    function step(now) {
+      if (start === null) start = now;
+      var t = Math.min((now - start) / SCROLL_MS, 1);
+      window.scrollTo(0, from + (to - from) * ease(t));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        root.style.scrollSnapType = "";
+        animating = false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function step(dir) {
+    var sections = Array.prototype.slice.call(document.querySelectorAll(".gallery-section"));
+    if (!sections.length) return;
+    var next = Math.max(0, Math.min(sections.length - 1, currentIndex(sections) + dir));
+    goTo(sections, next);
+  }
+
+  window.addEventListener(
+    "wheel",
+    function (e) {
+      if (mobileQuery.matches || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      var now = Date.now();
+      var fresh = now - lastWheel > 120; // trackpad inertia keeps firing events
+      lastWheel = now;
+      if (animating || !fresh || Math.abs(e.deltaY) < 4) return;
+      step(e.deltaY > 0 ? 1 : -1);
+    },
+    { passive: false }
+  );
+
+  window.addEventListener("keydown", function (e) {
+    if (mobileQuery.matches || e.altKey || e.ctrlKey || e.metaKey) return;
+    var dir = 0;
+    if (e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && !e.shiftKey)) dir = 1;
+    else if (e.key === "ArrowUp" || e.key === "PageUp" || (e.key === " " && e.shiftKey)) dir = -1;
+    if (!dir) return;
+    e.preventDefault();
+    if (!animating) step(dir);
+  });
+
   document.addEventListener("DOMContentLoaded", loadArtworks);
   document.addEventListener("i18n:changed", render);
 
